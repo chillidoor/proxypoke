@@ -1,5 +1,44 @@
 #!/usr/bin/env ruby
 
+require "optparse"
+
 require "proxypoke"
 
-ProxyPoke.run
+
+
+options = {
+    proxy_host: "localhost",
+    proxy_port: 3128,
+}
+
+
+options_parser = OptionParser.new do |parser|
+  parser.banner = "Usage: proxypass [options]"
+
+  parser.on("-u", "--url URL", "Test URL to query. Required.") do |v|
+    options[:url] = v
+  end
+
+  parser.on("-o", "--proxy-host HOST", "Proxy hostname or IP address. Defaults to 'localhost'.") do |v|
+    options[:proxy_host] = v
+  end
+
+  parser.on("-p", "--proxy-port PORT", Integer, "Port to connect to on the proxy host. Defaults to 3128.") do |v|
+    options[:proxy_port] = v
+  end
+
+  parser.on("-h", "--help", "Prints this help.") do
+    puts parser
+    exit
+  end
+
+end
+
+options_parser.parse!
+
+if not options.keys.include? :url
+  puts options_parser.help
+  exit(false)
+end
+
+ProxyPoke.poke(options[:url], options[:proxy_host], options[:proxy_port])
