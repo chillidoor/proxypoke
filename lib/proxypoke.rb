@@ -1,7 +1,7 @@
 require "net/http"
 
 module ProxyPoke
-  def self.poke(url, proxy_host="localhost", proxy_port=3128)
+  def self.poke(url, proxy_host, proxy_port)
     uri = URI(url)
 
     client = Net::HTTP.new(
