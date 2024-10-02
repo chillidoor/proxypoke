@@ -16,16 +16,14 @@ module ProxyPoke
     
     begin
       response = client.get(url)
+      result, message = "Success", "#{proxy_host}:#{proxy_port} is working"
     rescue Net::ReadTimeout
-      puts "Error: connection timed out after #{client.read_timeout} seconds"
-      exit(false)
+      result, message = "Error", "connection timed out after #{client.read_timeout} seconds"
     rescue Errno::ECONNREFUSED
-      puts "Error: could not connect to proxy #{proxy_host} on port #{proxy_port}"
-      exit(false)
+      result, message = "Error", "could not connect to proxy #{proxy_host} on port #{proxy_port}"
     end
 
-    puts "Success: #{proxy_host}:#{proxy_port} is working"
-    exit(true)
+    return result, message
   end
 
 
