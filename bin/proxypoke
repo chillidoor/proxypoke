@@ -9,6 +9,7 @@ require "proxypoke"
 options = {
     proxy_host: "localhost",
     proxy_port: 3128,
+    read_timeout: 3,
 }
 
 
@@ -25,6 +26,10 @@ options_parser = OptionParser.new do |parser|
 
   parser.on("-p", "--proxy-port PORT", Integer, "Port to connect to on the proxy host. Defaults to 3128.") do |v|
     options[:proxy_port] = v
+  end
+
+  parser.on("-t", "--timeout", Integer, "Request timeout value. Defaults to 3 seconds") do |v|
+    options[:read_timeout] = v
   end
 
   parser.on("-h", "--help", "Prints this help.") do
@@ -45,3 +50,4 @@ result, message = ProxyPoke.poke(options[:url], options[:proxy_host], options[:p
 
 puts "#{result}: #{message}"
 result == "Success" ? exit : exit(1)
+

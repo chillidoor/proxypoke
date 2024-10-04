@@ -1,7 +1,7 @@
 require "net/http"
 
 module ProxyPoke
-  def self.poke(url, proxy_host, proxy_port)
+  def self.poke(url, proxy_host, proxy_port, read_timeout)
     uri = URI(url)
 
     client = Net::HTTP.new(
@@ -12,7 +12,7 @@ module ProxyPoke
     )
 
     client.use_ssl = uri.scheme == "https" ? true : false
-    client.read_timeout = 3
+    client.read_timeout = read_timeout
     
     begin
       response = client.get(url)
