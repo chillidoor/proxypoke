@@ -28,7 +28,7 @@ options_parser = OptionParser.new do |parser|
     options[:proxy_port] = v
   end
 
-  parser.on("-t", "--timeout", Integer, "Request timeout value. Defaults to 3 seconds") do |v|
+  parser.on("-t", "--timeout", Float, "Request timeout value. Defaults to 3 seconds") do |v|
     options[:read_timeout] = v
   end
 
@@ -46,7 +46,7 @@ if not options.keys.include? :url
   exit(false)
 end
 
-result, message = ProxyPoke.poke(options[:url], options[:proxy_host], options[:proxy_port])
+result, message = ProxyPoke.poke(options[:url], options[:proxy_host], options[:proxy_port], options[:read_timeout])
 
 puts "#{result}: #{message}"
 result == "Success" ? exit : exit(1)
