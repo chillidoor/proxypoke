@@ -10,6 +10,7 @@ options = {
     proxy_host: "localhost",
     proxy_port: 3128,
     read_timeout: 3,
+    search_string: ""
 }
 
 
@@ -32,6 +33,10 @@ options_parser = OptionParser.new do |parser|
     options[:read_timeout] = v
   end
 
+  parser.on("-s", "--string STRING", "Search for a specific string in the response body") do |v|
+    options[:search_string] = v
+  end
+
   parser.on("-h", "--help", "Prints this help.") do
     puts parser
     exit
@@ -46,7 +51,13 @@ if not options.keys.include? :url
   exit(false)
 end
 
-result, message = ProxyPoke.poke(options[:url], options[:proxy_host], options[:proxy_port], options[:read_timeout])
+result, message = ProxyPoke.poke(
+                  options[:url],
+                  options[:proxy_host],
+                  options[:proxy_port],
+                  options[:read_timeout],
+                  options[:search_string]
+                )
 
 puts "#{result}: #{message}"
 result == "Success" ? exit : exit(1)
