@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
     s.name                    = "proxypoke"
-    s.version                 = "1.0.0"
+    s.version                 = "1.1.0"
     s.summary                 = "Makes an HTTP request to check if a web proxy is working"
     s.authors                 = ["David Jennings"]
     s.email                   = "david@chillidoor.com"
